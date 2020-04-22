@@ -12,9 +12,9 @@ function calc(state: CalcState = { computed: 0 }, action: CalcAction): CalcState
     case '-':
       return minus(state, action.payload);
     case '*':
-      return divide(state, action.payload);
-    case '/':
       return multiply(state, action.payload);
+    case '/':
+      return divide(state, action.payload);
     default:
       return state;
   }

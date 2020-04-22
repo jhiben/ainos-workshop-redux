@@ -1,3 +1,5 @@
+import { Dispatch } from 'redux';
+
 export const PLUS = '+';
 export const MINUS = '-';
 export const DIVIDE = '/';
@@ -48,6 +50,14 @@ export function multiply(payload: number): MultiplyAction {
   return {
     type: MULTIPLY,
     payload,
+  };
+}
+
+export function multiply_slow(payload: number) {
+  return (dispatch: Dispatch) => {
+    setTimeout(() => {
+      dispatch(multiply(payload));
+    }, 2000);
   };
 }
 

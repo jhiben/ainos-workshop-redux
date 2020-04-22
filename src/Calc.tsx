@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Button from './Button';
 import { connect } from 'react-redux';
 import { CalcState } from './reducers';
-import { plus, minus, divide, multiply } from './actions';
+import { plus, minus, divide, multiply, multiply_slow } from './actions';
 
 interface CalcProps {
   result: number;
@@ -10,9 +10,10 @@ interface CalcProps {
   minus: (arg: number) => void;
   divide: (arg: number) => void;
   multiply: (arg: number) => void;
+  multiply_slow: (arg: number) => void;
 }
 
-const Calc: React.FC<CalcProps> = ({ result, plus, minus, divide, multiply }) => {
+const Calc: React.FC<CalcProps> = ({ result, plus, minus, divide, multiply, multiply_slow }) => {
   const [arg, setArg] = useState(0);
 
   return (
@@ -39,6 +40,9 @@ const Calc: React.FC<CalcProps> = ({ result, plus, minus, divide, multiply }) =>
         <Button text="*" onClick={() => multiply(arg)} />
         <Button text="/" onClick={() => divide(arg)} />
       </div>
+      <div>
+        <Button text="*..." width={100} onClick={() => multiply_slow(arg)} />
+      </div>
       <div style={{ marginTop: 20 }}>{result}</div>
     </div>
   );
@@ -52,6 +56,7 @@ const mapDispatchToProps = {
   plus,
   minus,
   multiply,
+  multiply_slow,
   divide,
 };
 
