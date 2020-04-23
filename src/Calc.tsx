@@ -14,7 +14,7 @@ interface CalcProps {
 }
 
 const Calc: React.FC<CalcProps> = ({ result, plus, minus, divide, multiply, multiply_slow }) => {
-  const [arg, setArg] = useState(0);
+  const [arg, setArg] = useState(2);
 
   return (
     <div
