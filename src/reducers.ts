@@ -1,39 +1,45 @@
 import { CalcAction } from './actions';
 import { combineReducers } from 'redux';
+import { produce, Draft } from 'immer';
 
 export interface CalcState {
-  computed: number;
+  readonly computed: number;
 }
 
-function calc(state: CalcState = { computed: 0 }, action: CalcAction): CalcState {
-  switch (action.type) {
-    case '+':
-      return plus(state, action.payload);
-    case '-':
-      return minus(state, action.payload);
-    case '*':
-      return multiply(state, action.payload);
-    case '/':
-      return divide(state, action.payload);
-    default:
-      return state;
-  }
+const calc = produce(
+  (state: Draft<CalcState>, action: CalcAction) => {
+    switch (action.type) {
+      case '+':
+        plus(state, action.payload);
+        break;
+      case '-':
+        minus(state, action.payload);
+        break;
+      case '*':
+        multiply(state, action.payload);
+        break;
+      case '/':
+        divide(state, action.payload);
+        break;
+    }
+  },
+  { computed: 0 }
+);
+
+function plus(state: Draft<CalcState>, value: number) {
+  state.computed += value;
 }
 
-function plus({ computed, ...state }: CalcState, value: number): CalcState {
-  return { ...state, computed: computed + value };
+function minus(state: Draft<CalcState>, value: number) {
+  state.computed -= value;
 }
 
-function minus({ computed, ...state }: CalcState, value: number): CalcState {
-  return { ...state, computed: computed - value };
+function divide(state: Draft<CalcState>, value: number) {
+  state.computed /= value;
 }
 
-function divide({ computed, ...state }: CalcState, value: number): CalcState {
-  return { ...state, computed: computed / value };
-}
-
-function multiply({ computed, ...state }: CalcState, value: number): CalcState {
-  return { ...state, computed: computed * value };
+function multiply(state: Draft<CalcState>, value: number) {
+  state.computed *= value;
 }
 
 const calcApp = combineReducers({ calc });
